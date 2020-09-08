@@ -1,7 +1,9 @@
+// Dependancies. MySQL for DB, inquirer for CLI and cTable for cleaner data return //
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 const cTable = require("console.table");
 
+// Boilerplate code creating connection to MySQL DB //
 var connection = mysql.createConnection( {
     host: "localhost",
     port: 3306, 
@@ -10,12 +12,14 @@ var connection = mysql.createConnection( {
     database: "employee_tracker",
 });
 
+// Confirming connection established, start CLI by calling init() //
 connection.connect(function(err) {
     if (err) throw err;
     console.log("connected as id " + connection.threadId + "\n");
     init();
 });
 
+// CLI interface //
 function init() {
     inquirer.prompt([{
         message: "Dynamic Employee DB: What would you like to do?",
@@ -58,4 +62,29 @@ function init() {
     }})
 }
 
+// Print to console: List of all current employees. SELECT *(all) FROM employee(table)
+function viewAllEmployees() {
+    connection.query("SELECT * FROM employees", function(err, res) {
+      if (err) throw (err);
+      console.log(res);
+    })
+  };
 
+
+
+
+
+
+
+
+// viewEmployeesByManager();
+
+// addEmployee();
+
+// removeEmployee();
+
+// updateEmployeePosition();
+
+// updateEmployeeManager();
+
+// viewAllPositions();
