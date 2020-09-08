@@ -69,7 +69,7 @@ function init() {
 
 // Print to console as table (console.table): List of all current employees. SELECT *(all) FROM employee(table)
 function viewAllEmployees() {
-    connection.query("SELECT * FROM employees", function (err, res) {
+    connection.query("SELECT e.id, e.first_name AS First Name, e.last_name AS Last Name, e.position_id AS Position, e.manager_id AS manager, FROM employees, INNER JOIN employees ON positions.title = employees.id", function (err, res) {
         if (err) throw (err)
         console.table(res)
     })
@@ -85,7 +85,7 @@ function viewEmployeesByManager() {
     
     // need to use INNER JOIN here but return value not id //
     }
-
+}
 
 
 
