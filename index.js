@@ -80,13 +80,11 @@ function viewEmployeesByManager() {
         message: "Enter manager name to see his/her staff:",
         name: "employeesByManager",
         type: "input",
-    }]) .then ([{
+    }]) .then; {
     connection.query("SELECT * FROM employees WHERE manager_id = res")
     
-    // use INNER JOIN here //
-
-
-    }])
+    // need to use INNER JOIN here but return value not id //
+    }
 
 
 
