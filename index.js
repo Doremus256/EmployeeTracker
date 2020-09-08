@@ -4,16 +4,16 @@ const inquirer = require("inquirer");
 const cTable = require("console.table");
 
 // Boilerplate code creating connection to MySQL DB //
-var connection = mysql.createConnection( {
+var connection = mysql.createConnection({
     host: "localhost",
-    port: 3306, 
-    user: "root", 
+    port: 3306,
+    user: "root",
     password: "SecretGarden13!",
     database: "employee_tracker",
 });
 
 // Confirming connection established, start CLI by calling init() //
-connection.connect(function(err) {
+connection.connect(function (err) {
     if (err) throw err;
     console.log("connected as id " + connection.threadId + "\n");
     init();
@@ -23,7 +23,7 @@ connection.connect(function(err) {
 function init() {
     inquirer.prompt([{
         message: "Dynamic Employee DB: What would you like to do?",
-        name: "searchType",
+        name: "mainMenu",
         type: "list",
         choices: [
             "View All Employees",
@@ -33,10 +33,11 @@ function init() {
             "Update Employee Position",
             "Update Employee Manager",
             "View All Positions",
+            "Exit"
         ]
     }])
-        .then(({ searchType }) => {
-            switch (searchType) {
+        .then(({ mainMenu }) => {
+            switch (mainMenu) {
                 case "View All Employees":
                     viewAllEmployees();
                     break;
@@ -58,17 +59,37 @@ function init() {
                 case "View All Positions":
                     viewAllPositions();
                     break;
+                case "Exit":
+                    connection.end();
+                    break;
                 default: connection.end();
-    }})
+            }
+        })
 }
 
-// Print to console: List of all current employees. SELECT *(all) FROM employee(table)
+// Print to console as table (console.table): List of all current employees. SELECT *(all) FROM employee(table)
 function viewAllEmployees() {
-    connection.query("SELECT * FROM employees", function(err, res) {
-      if (err) throw (err);
-      console.log(res);
+    connection.query("SELECT * FROM employees", function (err, res) {
+        if (err) throw (err)
+        console.table(res)
     })
-  };
+};
+
+function viewEmployeesByManager() {
+    inquirer.prompt([{
+        message: "Enter manager name to see his/her staff:",
+        name: "employeesByManager",
+        type: "input",
+    }]) .then ([{
+    connection.query("SELECT * FROM employees WHERE manager_id = res")
+    
+    // use INNER JOIN here //
+
+
+    }])
+
+
+
 
 
 
