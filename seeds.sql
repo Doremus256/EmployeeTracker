@@ -33,4 +33,3 @@ INSERT INTO employees (first_name, last_name, position_id, manager_id) VALUES
 ("Xander", "Billingsley", 7, 13);
 
 
-SELECT * FROM employees INNER JOIN positions ON positions.title = employees.position_id;
